@@ -10,8 +10,11 @@ Get-Content README.md
 Write-Host "`n--- AGENTS.md (first 80 lines) ---" -ForegroundColor Yellow
 Get-Content AGENTS.md -TotalCount 80
 
+Write-Host "`n--- docs/LIVE_STATE.md (most important for current work) ---" -ForegroundColor Yellow
+if (Test-Path docs/LIVE_STATE.md) { Get-Content docs/LIVE_STATE.md } else { "No LIVE_STATE.md yet" }
+
 Write-Host "`n--- docs/STATUS.md ---" -ForegroundColor Yellow
-if (Test-Path docs/STATUS.md) { Get-Content docs/STATUS.md -TotalCount 50 } else { "No STATUS.md yet" }
+if (Test-Path docs/STATUS.md) { Get-Content docs/STATUS.md -TotalCount 30 } else { "No STATUS.md yet" }
 
 Write-Host "`n--- Key related directories ---" -ForegroundColor Yellow
 $related = @(

@@ -24,7 +24,9 @@ This repo (`azure-ai-pantheon`) is intended to become the higher-level orchestra
 5. Evolve or replace parts of the current containerization approach.
 
 ## How This File Helps
-Update this file (or create dated snapshots) whenever major progress is made. Combined with `AGENTS.md`, a fresh Grok session can understand where we left off.
+This is a higher-level status. For day-to-day current work, see the more frequently updated `docs/LIVE_STATE.md`.
+
+Update both when major progress happens. Use the routine in AGENTS.md ("Routine Context Saving Protocol").
 
 ## Key Files to Review in a New Session
 - Root: `AGENTS.md`, `README.md`

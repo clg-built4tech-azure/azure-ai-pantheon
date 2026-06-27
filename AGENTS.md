@@ -98,6 +98,62 @@ When you (Grok or another agent) start fresh:
 - Commit context files early and often (`AGENTS.md`, `docs/*.md`).
 - Use clear, self-contained Markdown so a fresh session can understand the project without the full chat history.
 - When making progress, summarize changes back into `docs/STATUS.md` or this file.
+
+## Routine Context Saving Protocol (Critical for No Data Loss)
+
+This is the **official process** to ensure almost nothing important is lost after a reboot or new session.
+
+### 1. Primary Files That Must Stay Current
+- `docs/LIVE_STATE.md` — The single source of "what is happening RIGHT NOW". Short, scannable, frequently overwritten with latest status.
+- `docs/SESSION_LOG.md` — Append-only historical record of work sessions.
+- `AGENTS.md` — Only updated for major structural changes (new related repos, big architecture shifts, etc.).
+- `docs/DECISIONS.md` — Record important "why" decisions as they are made.
+- `docs/STATUS.md` — Higher-level overview (less frequently updated than LIVE_STATE).
+
+### 2. When to Save Context (The Triggers)
+Save context **routinely** at these points:
+- End of a focused work block (e.g., "I just finished analyzing the Bicep modules").
+- After any significant decision or discovery.
+- Before ending a long session or when the user says "save context", "update state", or "commit the memory".
+- At the end of implementing a feature or fixing something important.
+
+### 3. How to Save (The Method)
+**Preferred method (agent or human):**
+```powershell
+cd "C:\Users\openclaw\Documents\grok"
+powershell -ExecutionPolicy Bypass -File .\scripts\save-context.ps1 `
+  -Summary "Summarized what was just accomplished" `
+  -FocusArea "MAF research / Hermes factory analysis" `
+  -NextSteps "Next step 1\nNext step 2"
+```
+
+The script will:
+- Update `docs/LIVE_STATE.md` with the new current state and timestamp.
+- Append a structured entry to `docs/SESSION_LOG.md`.
+- Stage the important context files.
+- Print a suggested git commit message.
+
+**Alternative (direct agent action):**
+I can directly edit `docs/LIVE_STATE.md` and append to `docs/SESSION_LOG.md` using tools, then stage + commit. This is often cleaner during active work.
+
+### 4. Git Discipline
+- Context changes should almost always be committed.
+- Use clear messages starting with `chore(context): ...`
+- This makes `git log` itself a useful recovery tool.
+
+### 5. Agent Behavior Rules (For Me)
+When I am working on this project:
+- I will proactively keep `docs/LIVE_STATE.md` accurate.
+- After any non-trivial progress, I will either run the save script or directly update the live state files.
+- At the end of my response, if meaningful work happened, I will offer: "Would you like me to save the current context now?"
+- I will not rely solely on chat history.
+
+### 6. User Actions That Help
+- Say "save context" or "update live state" at natural stopping points.
+- Review `docs/LIVE_STATE.md` occasionally and correct anything that feels outdated.
+- Do not delete or heavily refactor these files without updating the protocol in this AGENTS.md.
+
+Following this protocol means that even if the entire conversation history disappears, a new session that reads `AGENTS.md` + `docs/LIVE_STATE.md` + recent SESSION_LOG entries will have excellent continuity.
 - For task tracking, prefer files in `docs/` or `TODO.md` alongside any in-session todo tools.
 
 ## Contact / Ownership
