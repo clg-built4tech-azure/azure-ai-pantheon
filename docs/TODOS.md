@@ -9,7 +9,7 @@ Use simple markdown checkboxes. Move completed items to a "Done" section or dele
 - [x] Create branch grok/next-steps-orchestrator
 - [x] Create minimal working mock Hermes + OpenClaw agents (for local compose)
 - [x] Update compose.yaml for hot reload
-- [x] Flesh out src/maf-orchestrator/ into a working FastAPI + MAF app (planning + routing workflow)
+- [x] Improve real MAF Workflow to heavier use of native primitives (Workflow graph, conditional handoff, planning node)
 - [x] Add MAF dependency + minimal working example (Agent + simple workflow using tools)
 - [x] Implement basic task submission endpoint (POST /tasks)
 - [x] Add health check + basic logging + OpenTelemetry setup (console)
