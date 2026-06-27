@@ -9,13 +9,14 @@ Use simple markdown checkboxes. Move completed items to a "Done" section or dele
 - [x] Create branch grok/next-steps-orchestrator
 - [x] Create minimal working mock Hermes + OpenClaw agents (for local compose)
 - [x] Update compose.yaml for hot reload
-- [ ] Flesh out src/maf-orchestrator/ into a working FastAPI + MAF app
-- [x] Add MAF dependency + minimal working example (Agent + simple workflow)
+- [x] Flesh out src/maf-orchestrator/ into a working FastAPI + MAF app (planning + routing workflow)
+- [x] Add MAF dependency + minimal working example (Agent + simple workflow using tools)
 - [x] Implement basic task submission endpoint (POST /tasks)
-- [ ] Add health check + basic logging + OpenTelemetry setup
+- [x] Add health check + basic logging + OpenTelemetry setup (console)
+- [x] Review and improve Bicep (added acr, aca-env, cosmos, key-vault modules)
 - [ ] Flesh out remaining Bicep modules (monitoring, foundry, etc.)
-- [ ] Wire real integration points to Hermes and OpenClaw
-- [ ] Add Cosmos DB for state in infrastructure + orchestrator
+- [ ] Wire real integration points to Hermes and OpenClaw (start with HTTP)
+- [ ] Add Cosmos DB for state in orchestrator code
 - [ ] Upgrade GitHub Actions workflows to use OIDC properly
 - [ ] Decide on primary language for MAF (Python strongly recommended)
 
