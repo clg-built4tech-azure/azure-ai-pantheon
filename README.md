@@ -7,7 +7,7 @@ This project builds the management, coordination, and orchestration layer for ru
 ## Quick Start for Humans and Agents
 
 ```powershell
-cd "C:\Users\openclaw\Documents\grok"
+cd <project-root>
 ```
 
 **For AI agents (especially after reboot)**: Read `AGENTS.md` first — it contains full project context, related code locations, and resume instructions.
@@ -36,9 +36,9 @@ Key stack:
 See `AGENTS.md` and files in `docs/`.
 
 ## Related Work
-This repo is the orchestration layer on top of earlier infrastructure work:
-- `../claude-code/azure-hermes-factory/`
-- `../../Downloads/oc-agent-main/oc-agent-main/`
+This repo is the orchestration layer on top of earlier infrastructure work in the related `azure-hermes-factory` and `oc-agent-main` projects (sibling repositories with prior Bicep IaC and agent container definitions). 
+
+See `docs/EXISTING_FACTORIES_ANALYSIS.md` and `docs/KNOWN_PRIOR_WORK.md` for analysis of those patterns.
 
 ## Contributing / Working With Agents
 - Always keep `AGENTS.md` and supporting docs up to date so future sessions (after reboots) do not lose context.

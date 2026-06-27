@@ -6,7 +6,6 @@
 - **Name**: azure-ai-pantheon
 - **Tagline**: AI Agent orchestration
 - **Repo**: https://github.com/clgintellicloud-hub/azure-ai-pantheon.git
-- **Workspace Path**: `C:\Users\openclaw\Documents\grok`
 - **Purpose**: Build a management and orchestration layer ("Pantheon") for multiple AI agents — specifically **Hermes Agent** and **OpenClaw** — running as containerized workloads inside **Azure Container Apps (ACA)**, with **Microsoft Agent Framework (MAF)** as a primary orchestration technology.
 
 ## Core Objective
@@ -22,21 +21,19 @@ Create a system that can:
 - Active development workspace is this folder.
 
 ## Critical Related Codebases (Prior Work)
-These contain existing patterns the Pantheon should build upon or evolve:
+These contain existing patterns the Pantheon should build upon or evolve. Full source for prior work lives in the related sibling projects `azure-hermes-factory` and `oc-agent-main`.
 
-1. **Azure Hermes Factory**  
-   Path: `C:\Users\openclaw\Documents\claude-code\azure-hermes-factory\`  
-   - Bicep-based IaC for ACA (dev + prod resource groups)  
-   - ACR, Container Apps Environment, multiple agents  
-   - Dockerized wrappers for Hermes + "analyst" + generic OpenClaw-style agents  
-   - Uses Node.js HTTP shim that spawns the real `hermes-agent` CLI  
-   - Scripts for build, revisions, rollback, smoke tests
+See:
+- `docs/EXISTING_FACTORIES_ANALYSIS.md` — Detailed comparison and implications
+- `docs/KNOWN_PRIOR_WORK.md` — Summary of patterns from those projects
 
-2. **OC Agent Main**  
-   Path: `C:\Users\openclaw\Downloads\oc-agent-main\oc-agent-main\`  
-   - Very similar structure to the above, more OpenClaw-focused configs
+Key patterns observed:
+- Bicep-based IaC for ACA (dev + prod)
+- ACR + Log Analytics + Container Apps
+- Dockerized wrappers that spawn the real Hermes/OpenClaw agent CLI
+- Scripts for revisions, rollback, and smoke tests
 
-These two should be studied when designing the Pantheon layer.
+These should be studied when designing the Pantheon layer.
 
 ## Key Technologies
 - **Microsoft Agent Framework (MAF)** — Primary framework for the orchestration layer (Python and/or .NET). Unifies concepts from Semantic Kernel + AutoGen. Supports workflows, agents, middleware, sessions, MCP, strong telemetry.
@@ -65,7 +62,7 @@ When you (Grok or another agent) start fresh:
 
 1. Change to the project directory:
    ```powershell
-   cd "C:\Users\openclaw\Documents\grok"
+   cd <project-root>
    ```
 
 2. **Read the following files first** (in this order):
@@ -80,8 +77,8 @@ When you (Grok or another agent) start fresh:
    ```
 
 4. Review prior work (very important):
-   - List and read key files from `..\claude-code\azure-hermes-factory\`
-   - Review the `oc-agent-main` folder
+   - Read `docs/EXISTING_FACTORIES_ANALYSIS.md` and `docs/KNOWN_PRIOR_WORK.md`
+   - These describe patterns from the related `azure-hermes-factory` and `oc-agent-main` projects
 
 5. Ask the user or review recent commits for the latest task.
 
@@ -123,7 +120,7 @@ Save context **routinely** at these points:
 ### 3. How to Save (The Method)
 **Preferred method (agent or human):**
 ```powershell
-cd "C:\Users\openclaw\Documents\grok"
+cd <project-root>
 powershell -ExecutionPolicy Bypass -File .\scripts\save-context.ps1 `
   -Summary "Summarized what was just accomplished" `
   -FocusArea "MAF research / Hermes factory analysis" `
@@ -178,7 +175,7 @@ Following this protocol means that even if the entire conversation history disap
 Use the provided helper script (recommended):
 
 ```powershell
-cd "C:\Users\openclaw\Documents\grok"
+cd <project-root>
 .\scripts\create-grok-branch.ps1 add-maf-orchestrator
 # or with bypass if needed:
 powershell -ExecutionPolicy Bypass -File .\scripts\create-grok-branch.ps1 "your-feature-name"

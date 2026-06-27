@@ -45,7 +45,7 @@ Build the azure-ai-pantheon orchestration layer using Microsoft Agent Framework 
 - Observability integration with Microsoft Foundry.
 
 ## Key Facts That Must Not Be Lost
-- Workspace: C:\Users\openclaw\Documents\grok
+- Project root is the root of this repository.
 - GitHub user/org: clgintellicloud-hub
 - Existing agent deployments use Node.js wrappers around `hermes-agent` CLI inside ACA containers.
 - gh CLI is already authenticated with repo scope.
