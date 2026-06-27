@@ -14,7 +14,7 @@ from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
 
-from app.workflows.task_router import run_simple_workflow
+from app.workflows.task_router import run_pantheon_workflow
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("maf-orchestrator")
@@ -41,12 +41,15 @@ async def health():
 async def orchestrate(request: TaskRequest):
     """Submit a task to the MAF orchestrator.
     
-    Phase 1: Uses a minimal MAF workflow with planning + routing to mock agents.
+    Uses a proper MAF Workflow Graph:
+    - Planning step
+    - Conditional handoff to HermesAgent / OpenClawAgent / Both
+    - Basic success/failure handling
     """
     with tracer.start_as_current_span("orchestrate_task"):
         logger.info(f"Received task: {request.prompt[:100]}...")
         
-        result = await run_simple_workflow(request.prompt)
+        result = await run_pantheon_workflow(request.prompt)
         
         logger.info(f"Workflow completed for task. Agents used: {[r['agent'] for r in result.get('results', [])]}")
         
