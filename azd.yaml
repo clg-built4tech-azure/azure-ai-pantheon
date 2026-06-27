@@ -1,0 +1,22 @@
+# Azure Developer CLI configuration for azure-ai-pantheon
+# Run: azd up
+name: azure-ai-pantheon
+metadata:
+  template: azure-ai-pantheon@0.1.0
+services:
+  orchestrator:
+    project: src/maf-orchestrator
+    host: containerapp
+    language: python
+  hermes:
+    project: agents/hermes-agent
+    host: containerapp
+  openclaw:
+    project: agents/openclaw-agent
+    host: containerapp
+infra:
+  provider: bicep
+  path: infra
+  module: main
+pipeline:
+  provider: github

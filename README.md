@@ -17,9 +17,20 @@ cd "C:\Users\openclaw\Documents\grok"
 - Leverage Microsoft Agent Framework for workflows, routing, state, and observability.
 - Evolve and unify existing deployment patterns for Hermes and OpenClaw on ACA.
 
+## Recommended Architecture
+See the full production-grade recommendation:
+- **[docs/architecture.md](docs/architecture.md)** — Azure services (ACA + Microsoft Foundry + Cosmos DB + ACR + Managed Identity), high-level architecture, and GitHub repo structure for controllable IaC + app deployments.
+
+Key stack:
+- MAF orchestrator in Azure Container Apps
+- Hermes + OpenClaw agents in isolated ACA instances
+- Cosmos DB for durable MAF workflow state/checkpointing
+- Microsoft Foundry for models, tools, and rich observability
+
 ## Documentation
 - **[AGENTS.md](AGENTS.md)** — Essential reading for any AI coding agent. Contains project history, related code, architecture notes, and recovery instructions.
-- `docs/` — Detailed architecture, decisions, status, and runbooks (to be expanded).
+- `docs/architecture.md` — Target Azure architecture and file structure.
+- `docs/` — Detailed architecture, decisions, status, runbooks, and existing factories analysis.
 
 ## Current Status
 See `AGENTS.md` and files in `docs/`.

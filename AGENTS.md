@@ -48,14 +48,17 @@ These two should be studied when designing the Pantheon layer.
 - **Microsoft Foundry** — Likely target for observability and higher-level agent features.
 - GitHub CLI (`gh`) — Already authenticated as `clgintellicloud-hub`.
 
-## Architecture Direction (Early Thinking)
-- Lower layer: Existing containerized Hermes and OpenClaw instances on ACA (from the factories).
-- Orchestration layer: MAF agents/workflows that can discover, invoke, route to, monitor, and compose the above agents.
-- Possible patterns:
-  - MAF as supervisor / router
-  - Hermes/OpenClaw exposed via HTTP or MCP and treated as tools or sub-agents
-  - Unified control plane for versioning, scaling, A/B testing (leveraging ACA revisions)
-  - Strong observability (OTel → Application Insights → Foundry)
+## Architecture Direction (Guiding Document)
+Follow the full recommended architecture:
+- **[docs/architecture.md](docs/architecture.md)** — Production Azure stack (ACA primary runtime, Microsoft Foundry, Cosmos DB for state, ACR, Key Vault + Managed Identity, App Insights).
+- High-level flow: User/Trigger → MAF Orchestrator (ACA) → calls Hermes/OpenClaw agents (in their own ACA containers) → state in Cosmos + MAF checkpoints → full OTel traces in Foundry.
+- Repository structure: Strict separation of `infra/` (Bicep) and `src/` (MAF code) with path-filtered GitHub Actions for controllable deployments.
+- See also: `docs/EXISTING_FACTORIES_ANALYSIS.md` for analysis of prior work this architecture builds upon.
+
+Key implementation goals:
+- MAF workflows for orchestration, handoff, and tool calling to existing agents.
+- Expose Hermes/OpenClaw as MAF tools or via standardized endpoints (HTTP/MCP).
+- Use ACA revisions + Compose for Agents (preview) where appropriate.
 
 ## How to Resume Work After Reboot or New Session
 When you (Grok or another agent) start fresh:

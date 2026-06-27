@@ -1,0 +1,29 @@
+name: Deploy MAF Orchestrator
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/maf-orchestrator/**'
+    branches: [ main, 'grok/**' ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push orchestrator image
+        run: |
+          echo "Build maf-orchestrator image and push to ACR"
+
+      - name: Deploy to ACA
+        run: |
+          echo "Update Container App revision for maf-orchestrator"
