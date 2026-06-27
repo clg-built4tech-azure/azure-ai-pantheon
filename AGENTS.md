@@ -189,11 +189,15 @@ git checkout -b grok/your-feature-name
 ```
 
 ### Git Alias (Optional Convenience)
-You can set up a shortcut:
+The alias is already configured in this working tree:
 ```powershell
-git config alias.grok '!f() { pwsh -File scripts/create-grok-branch.ps1 "$1"; }; f'
-# Then use:
-git grok add-maf-orchestrator
+git grok-branch add-maf-orchestrator
+```
+
+**Note**: The alias is basic and accepts only the feature name (it creates + checks out `grok/<name>`).  
+For flags like `-NoCheckout`, call the script directly:
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\create-grok-branch.ps1 "add-maf-orchestrator" -NoCheckout
 ```
 
 ### Why the Prefix?

@@ -13,6 +13,9 @@
 
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File .\scripts\create-grok-branch.ps1 "hermes-agent-wrapper-improvements"
+
+    # Git alias is also available (basic name only):
+    # git grok-branch add-maf-orchestrator
 #>
 
 param(
