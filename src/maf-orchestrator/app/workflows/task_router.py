@@ -1,7 +1,6 @@
 # Proper MAF Workflow Graph: Planning → Conditional Handoff
 # Uses Microsoft Agent Framework (agent-framework) for graph-based orchestration
 
-import httpx
 import os
 from typing import Any, Dict, Optional
 
@@ -9,44 +8,37 @@ from agent_framework import Agent, Workflow, tool
 
 from app.state import state_store
 from app.config import get_settings
+from app.agents.hermes_client import HermesClient
+from app.agents.openclaw_client import OpenClawClient
 
 settings = get_settings()
 
-HERMES_ENDPOINT = os.getenv("HERMES_ENDPOINT", "http://localhost:8081")
-OPENCLAW_ENDPOINT = os.getenv("OPENCLAW_ENDPOINT", "http://localhost:8082")
+# Real clients (point to deployed agents via env vars, or mocks in local compose)
+hermes_client = HermesClient()
+openclaw_client = OpenClawClient()
 
 @tool
 async def call_hermes(prompt: str) -> str:
-    """Tool for delegating to Hermes (self-improving / analysis agent)."""
-    async with httpx.AsyncClient(timeout=30.0) as client:
-        resp = await client.post(
-            f"{HERMES_ENDPOINT}/execute",
-            json={"prompt": prompt}
-        )
-        data = resp.json()
-        return data.get("result", str(data))
+    """MAF Tool: Delegates to the real (or mock) Hermes agent via HTTP."""
+    response = await hermes_client.execute(prompt)
+    return response.get("result", str(response))
 
 @tool
 async def call_openclaw(prompt: str) -> str:
-    """Tool for delegating to OpenClaw (personal / execution agent)."""
-    async with httpx.AsyncClient(timeout=30.0) as client:
-        resp = await client.post(
-            f"{OPENCLAW_ENDPOINT}/execute",
-            json={"prompt": prompt}
-        )
-        data = resp.json()
-        return data.get("result", str(data))
+    """MAF Tool: Delegates to the real (or mock) OpenClaw agent via HTTP."""
+    response = await openclaw_client.execute(prompt)
+    return response.get("result", str(response))
 
-# Define MAF Agents
+# Define MAF Agents that use the real HTTP clients via tools
 hermes_agent = Agent(
     name="HermesAgent",
-    instructions="You are a self-improving autonomous agent specialized in analysis, planning, and learning. Use tools when appropriate.",
+    instructions="You are a self-improving autonomous agent specialized in analysis, planning, and learning. Use the call_hermes tool to delegate work.",
     tools=[call_hermes]
 )
 
 openclaw_agent = Agent(
     name="OpenClawAgent",
-    instructions="You are a reliable personal AI assistant focused on execution and autonomous actions. Use tools when appropriate.",
+    instructions="You are a reliable personal AI assistant focused on execution and autonomous actions. Use the call_openclaw tool to delegate work.",
     tools=[call_openclaw]
 )
 
