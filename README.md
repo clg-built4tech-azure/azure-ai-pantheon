@@ -30,7 +30,12 @@ This repo is the orchestration layer on top of earlier infrastructure work:
 - `../../Downloads/oc-agent-main/oc-agent-main/`
 
 ## Contributing / Working With Agents
-Always keep `AGENTS.md` and supporting docs up to date so future sessions (after reboots) do not lose context.
+- Always keep `AGENTS.md` and supporting docs up to date so future sessions (after reboots) do not lose context.
+- **All feature branches must be prefixed with `grok/`** (e.g. `grok/add-maf-orchestrator`). See [AGENTS.md](AGENTS.md) → Branching Strategy.
+- Use the helper: `.\scripts\create-grok-branch.ps1 your-feature-name` or the `git grok-branch` alias (after setup).
+
+## Branching
+See the full rules in [AGENTS.md](AGENTS.md). Main stays `main`. Everything else uses the `grok/` prefix.
 
 ## License
 TBD
