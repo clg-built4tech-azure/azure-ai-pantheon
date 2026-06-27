@@ -31,7 +31,7 @@ module acr 'modules/acr.bicep' = {
   }
 }
 
-// ACA Environment + Monitoring
+// ACA Environment + Monitoring (Log Analytics)
 module acaEnv 'modules/aca-environment.bicep' = {
   name: 'acaEnv'
   scope: rg
