@@ -12,11 +12,18 @@
 Build the azure-ai-pantheon orchestration layer using Microsoft Agent Framework (MAF) to manage and coordinate Hermes Agent and OpenClaw instances running in Azure Container Apps.
 
 ## What We Are Working On Right Now
-**Branch**: `grok/analyze-existing-factories`
+**Branch**: `grok/azure-maf-architecture`
 
-- Performing initial analysis of the two existing agent deployment factories (azure-hermes-factory and oc-agent-main).
-- Documenting common patterns, differences, and implications for the future MAF-based Pantheon orchestration layer.
-- Created `docs/EXISTING_FACTORIES_ANALYSIS.md` as the first real artifact on this feature branch.
+- Implementing the full recommended Azure architecture for MAF-based orchestration of Hermes + OpenClaw agents.
+- Added `docs/architecture.md` (core services table, high-level architecture, detailed GitHub repo file structure).
+- Scaffolded production-ready project layout:
+  - `infra/` with Bicep (main + reusable modules)
+  - `src/maf-orchestrator/` (FastAPI + MAF skeleton)
+  - `agents/` placeholders
+  - `compose.yaml`, `azd.yaml`
+  - GitHub Actions workflow stubs for controllable deploys
+- Updated README.md and AGENTS.md to make the architecture the guiding reference.
+- Builds directly on `docs/EXISTING_FACTORIES_ANALYSIS.md`.
 
 ## Last Major Accomplishments
 - 2026-06-27: Cloned the repo + set up context & branching infrastructure.
