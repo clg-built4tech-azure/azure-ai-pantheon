@@ -1,5 +1,8 @@
 # Local Docker Compose mirroring the production MAF orchestration architecture
 # Run with: docker compose up --build
+#
+# SECURITY: Never put real credentials in this file.
+# Use .env (gitignored) with variable substitution or external secrets.
 
 services:
   maf-orchestrator:

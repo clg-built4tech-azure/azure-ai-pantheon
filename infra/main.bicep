@@ -1,6 +1,9 @@
 // azure-ai-pantheon - Main Bicep orchestration for MAF-based agent orchestration
 // Deploys: ACA environment, ACR, Cosmos DB, Key Vault, Container Apps (orchestrator + agents), Monitoring
 // Follows the recommended architecture in docs/architecture.md
+//
+// SECURITY: Never hardcode secrets here. Use parameters + Key Vault references or Managed Identities.
+// See docs/security-guidelines.md for IaC rules.
 
 targetScope = 'subscription'
 

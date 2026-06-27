@@ -1,5 +1,8 @@
 # Azure Developer CLI configuration for azure-ai-pantheon
 # Run: azd up
+#
+# SECURITY: Use `azd env set` for local secrets (stored locally, not committed).
+# Follow docs/security-guidelines.md.
 name: azure-ai-pantheon
 metadata:
   template: azure-ai-pantheon@0.1.0

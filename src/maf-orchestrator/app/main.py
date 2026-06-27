@@ -1,5 +1,8 @@
 # MAF Orchestrator entrypoint
 # Uses Microsoft Agent Framework (MAF) for coordination of Hermes + OpenClaw agents
+#
+# SECURITY: Load all secrets from environment variables only.
+# Never hardcode credentials. See docs/security-guidelines.md
 
 from fastapi import FastAPI
 

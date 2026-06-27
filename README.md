@@ -30,6 +30,9 @@ Key stack:
 ## Documentation
 - **[AGENTS.md](AGENTS.md)** — Essential reading for any AI coding agent. Contains project history, related code, architecture notes, and recovery instructions.
 - `docs/architecture.md` — Target Azure architecture and file structure.
+- `docs/security-guidelines.md` — GitHub repo & GitHub Actions security rules (no secrets, OIDC, etc.).
+- `SECURITY.md` — Security policy.
+- `docs/local-development.md` — How to set up local secrets safely (always use .env.example).
 - `docs/` — Detailed architecture, decisions, status, runbooks, and existing factories analysis.
 
 ## Current Status
@@ -44,6 +47,7 @@ See `docs/EXISTING_FACTORIES_ANALYSIS.md` and `docs/KNOWN_PRIOR_WORK.md` for ana
 - Always keep `AGENTS.md` and supporting docs up to date so future sessions (after reboots) do not lose context.
 - **All feature branches must be prefixed with `grok/`** (e.g. `grok/add-maf-orchestrator`). See [AGENTS.md](AGENTS.md) → Branching Strategy.
 - Use the helper: `.\scripts\create-grok-branch.ps1 your-feature-name` or the `git grok-branch` alias (after setup).
+- **Security first**: Follow `docs/security-guidelines.md` and `SECURITY.md`. Never commit secrets. Use OIDC for Azure. See `.gitignore` for required patterns.
 
 ## Branching
 See the full rules in [AGENTS.md](AGENTS.md). Main stays `main`. Everything else uses the `grok/` prefix.

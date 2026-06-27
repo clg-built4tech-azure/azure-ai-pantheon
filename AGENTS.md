@@ -99,6 +99,21 @@ When you (Grok or another agent) start fresh:
 - Use clear, self-contained Markdown so a fresh session can understand the project without the full chat history.
 - When making progress, summarize changes back into `docs/STATUS.md` or this file.
 
+## Security Guidelines for AI Assistants
+
+This repository follows strict security rules (see `docs/security-guidelines.md`).
+
+When generating or modifying code, workflows, or IaC:
+
+- **Never** output real credentials, tokens, example secret values, or personal information.
+- Always reference secrets using `${{ secrets.NAME }}` (GitHub Actions) or environment variables.
+- For Azure: Prefer and generate **OIDC-based authentication** using the `azure/login` action with `client-id` / `tenant-id` from `vars` (not secrets).
+- When creating new files, recommend appropriate additions to `.gitignore`.
+- Add security comments in generated code (e.g. `# Store value in GitHub Secrets as AZURE_CLIENT_ID`).
+- For Bicep/infra: Use parameters. Never hardcode connection strings or keys.
+- For local development instructions: Always tell the user to use gitignored `.env` files.
+- Follow all rules in `docs/security-guidelines.md` and `SECURITY.md`.
+
 ## Routine Context Saving Protocol (Critical for No Data Loss)
 
 This is the **official process** to ensure almost nothing important is lost after a reboot or new session.
