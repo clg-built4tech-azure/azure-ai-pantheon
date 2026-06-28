@@ -72,7 +72,10 @@ async def orchestrate(request: TaskRequest):
             "status": "processed",
             "input": request.prompt,
             "checkpoint_id": result.get("checkpoint_id"),
-            "result": result
+            "agents_used": result.get("agents_used", []),
+            "plan": result.get("plan"),
+            "summary": result.get("summary"),
+            "details": result.get("execution")
         }
 
 @app.post("/tasks")

@@ -1,10 +1,13 @@
 # Proper MAF Workflow Graph: Planning → Conditional Handoff
 # Uses Microsoft Agent Framework (agent-framework) for graph-based orchestration
 
+import logging
 import os
 from typing import Any, Dict, Optional
 
 from agent_framework import Agent, Workflow, tool
+
+logger = logging.getLogger(__name__)
 
 from app.state import state_store
 from app.config import get_settings
@@ -187,31 +190,25 @@ async def run_pantheon_workflow(
 
     route = plan.get("route")
 
-    # --- Execute the MAF Workflow natively ---
-    # We feed the plan into the native Workflow.
-    # MAF will follow the conditional edges (handoff) we defined.
-    try:
-        # Use MAF's native run on the workflow graph
-        wf_result = await workflow.run(plan)
-        # wf_result will contain the output from the terminal executor(s)
-    except Exception as e:
-        # Fallback to step-by-step execution if the exact run signature varies
-        print(f"[MAF] Native workflow.run() not directly applicable, falling back to graph-driven execution: {e}")
-        wf_result = None
-
     results = list(results_so_far)
 
-    # If native run didn't give us the handoff results, perform the handoffs
-    # (this keeps the code working while we converge on the exact MAF run API)
+    # Execute the handoffs based on the plan (MAF graph driven)
+    # This follows the structure defined in create_pantheon_workflow
+    logger = logging.getLogger("maf-orchestrator.workflow")
+    
     if route in ["hermes", "both"] and not any(r.get("agent") == "hermes" for r in results):
+        logger.info("Handoff to HermesAgent...")
         hermes_out = await handoff_to_hermes(plan)
         results.append(hermes_out)
         await state_store.update_result(checkpoint_id, hermes_out)
+        logger.info(f"HermesAgent completed with status: {hermes_out.get('status')}")
 
     if route in ["openclaw", "both"] and not any(r.get("agent") == "openclaw" for r in results):
+        logger.info("Handoff to OpenClawAgent...")
         openclaw_out = await handoff_to_openclaw(plan)
         results.append(openclaw_out)
         await state_store.update_result(checkpoint_id, openclaw_out)
+        logger.info(f"OpenClawAgent completed with status: {openclaw_out.get('status')}")
 
     # Combine if "both"
     if route == "both":
@@ -234,6 +231,7 @@ async def run_pantheon_workflow(
         "plan": plan,
         "execution": execution,
         "checkpoint_id": checkpoint_id,
-        "workflow": "MAF native Workflow + conditional handoff + Cosmos checkpointing"
+        "summary": execution.get("summary", "Task completed via MAF orchestrator"),
+        "agents_used": [r.get("agent") for r in results if isinstance(r, dict) and "agent" in r]
     }
 

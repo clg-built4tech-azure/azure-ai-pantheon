@@ -28,24 +28,44 @@ azd env set FOUNDRY_ENDPOINT https://...
 
 These are stored locally by azd and not committed.
 
-## Running Locally (Phase 1)
+## Running Locally - End-to-End Demo
 
 ```powershell
-# 1. Prepare env
-copy .env.example .env   # Edit if needed (most values optional for mocks)
+# 1. Prepare environment (mocks work with defaults)
+copy .env.example .env
 
-# 2. Build and run with Docker Compose (recommended)
+# 2. Start everything (orchestrator + mock Hermes + mock OpenClaw)
 docker compose up --build
 
-# In another terminal, test:
-# Invoke-RestMethod http://localhost:8000/health
-# Invoke-RestMethod -Method Post -Uri http://localhost:8000/tasks -Body (@{prompt="Analyze market trends and execute plan"} | ConvertTo-Json) -ContentType "application/json"
+# 3. In another terminal, test the full flow:
 
-# Or run orchestrator directly for faster iteration:
+# Health check
+Invoke-RestMethod http://localhost:8000/health
+
+# Example 1: Triggers Hermes (analysis keywords)
+Invoke-RestMethod -Method Post -Uri http://localhost:8000/tasks -Body (@{prompt="Analyze this complex strategy problem"} | ConvertTo-Json) -ContentType "application/json"
+
+# Example 2: Triggers OpenClaw (general execution)
+Invoke-RestMethod -Method Post -Uri http://localhost:8000/tasks -Body (@{prompt="Help me book a flight and send an email"} | ConvertTo-Json) -ContentType "application/json"
+
+# Example 3: Triggers both
+Invoke-RestMethod -Method Post -Uri http://localhost:8000/orchestrate -Body (@{prompt="Research the market and also execute the outreach plan"} | ConvertTo-Json) -ContentType "application/json"
+```
+
+You should see in the logs:
+- Planning step
+- Handoff to HermesAgent / OpenClawAgent
+- Results from the agents
+
+The response will include the plan and execution details.
+
+For faster Python-only dev (without Docker):
+```powershell
 cd src/maf-orchestrator
 pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
+(Note: the mock agents need to be running separately for full end-to-end.)
 
 ## Security Reminders
 
