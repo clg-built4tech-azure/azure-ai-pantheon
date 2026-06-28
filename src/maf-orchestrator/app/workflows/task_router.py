@@ -76,6 +76,7 @@ async def plan_task(input: str) -> Dict[str, Any]:
     if route in ["openclaw", "both"]:
         plan["steps"].append("OpenClaw: Execution and autonomous actions")
     
+    logger.info(f"Planning complete. Route decision: {route}")
     return plan
 
 # Handoff / execution nodes
