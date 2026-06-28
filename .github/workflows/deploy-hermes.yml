@@ -1,0 +1,19 @@
+name: Deploy Hermes Agent (local sim)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'agents/hermes-agent/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build mock
+        run: |
+          echo "Build hermes agent image (for local or ACR in real)"
+      - name: Local test
+        run: |
+          echo "In real, deploy to ACA; here simulate"

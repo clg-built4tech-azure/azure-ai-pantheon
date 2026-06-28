@@ -1,0 +1,19 @@
+name: Deploy OpenClaw Agent (local sim)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'agents/openclaw-agent/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build mock
+        run: |
+          echo "Build openclaw agent image"
+      - name: Local test
+        run: |
+          echo "Simulate deploy"

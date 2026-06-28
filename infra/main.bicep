@@ -61,6 +61,29 @@ module kv 'modules/key-vault.bicep' = {
   }
 }
 
+// Monitoring
+module monitoring 'modules/monitoring.bicep' = {
+  name: 'monitoring'
+  scope: rg
+  params: {
+    location: location
+    environment: environment
+  }
+}
+
+// Foundry (sim for local)
+module foundry 'modules/foundry.bicep' = {
+  name: 'foundry'
+  scope: rg
+  params: {
+    location: location
+    environment: environment
+  }
+}
+
+output monitoringKey string = monitoring.outputs.instrumentationKey
+output foundryEndpoint string = foundry.outputs.foundryEndpoint
+
 // Container Apps
 module orchestrator 'modules/container-app.bicep' = {
   name: 'orchestrator'

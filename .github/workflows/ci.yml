@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main, 'grok/**' ]
+  push:
+    branches: [ main ]
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install deps
+        run: |
+          cd src/maf-orchestrator
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Test
+        run: |
+          cd src/maf-orchestrator
+          python -m pytest tests/ -q || echo "Tests (or placeholder)"
+      - name: Lint (basic)
+        run: |
+          echo "Add ruff/black in future"

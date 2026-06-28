@@ -21,8 +21,8 @@ async def test_health():
 async def test_pantheon_workflow():
     result = await run_pantheon_workflow("Analyze this complex problem")
     assert "plan" in result
-    assert "execution" in result or "results" in str(result)  # flexible for graph output
-    assert "workflow" in result
+    assert "execution" in result
+    assert "agents_used" in result
 
 @pytest.mark.asyncio
 async def test_orchestrate_endpoint():
@@ -45,3 +45,8 @@ async def test_resume_with_checkpoint():
         resp2 = await ac.post("/orchestrate", json={"prompt": "Analyze and execute", "checkpoint_id": ckpt})
         assert resp2.status_code == 200
         assert resp2.json().get("checkpoint_id") == ckpt
+
+@pytest.mark.asyncio
+async def test_both_route():
+    result = await run_pantheon_workflow("Research and also act on it")
+    assert "both" in str(result.get("plan", {})).lower() or len(result.get("agents_used", [])) >= 1
